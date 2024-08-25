@@ -1,0 +1,19 @@
+{
+  "name": "pmss-backend",
+  "version": "1.0.0",
+  "description": "backend for pmss scholorship website ",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanchitYadav2005/PMSS-backend.git"
+  },
+  "author": "Arimals",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SanchitYadav2005/PMSS-backend/issues"
+  },
+  "homepage": "https://github.com/SanchitYadav2005/PMSS-backend#readme"
+}
