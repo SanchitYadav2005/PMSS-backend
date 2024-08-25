@@ -1,34 +1,48 @@
-// configured dotenv to work with .env file.
+// Load environment variables from .env file
 require("dotenv").config();
 
 const express = require("express");
-const app = express();
-const port = process.env.PORT;
 const path = require("path");
 const cors = require("cors");
-const body_parser = require("body-parser");
-const { default: mongoose } = require("mongoose");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
-// Serve static files (like CSS, images, and JS) from the "public" directory
+// Import route handlers
+const studentRoutes = require("./routes/studentRoutes");
+const authorityRoutes = require("./routes/authorityRoutes");
+
+const app = express();
+const port = process.env.PORT || 3000; // Default to port 3000 if PORT is not defined
+
+// Middleware
+// Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
 
 // Parse incoming JSON requests and populate req.body with the parsed data
-app.use(body_parser.json());
+app.use(bodyParser.json());
 
 // Parse incoming URL-encoded form data and populate req.body
-app.use(body_parser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Enable Cross-Origin Resource Sharing (CORS) to allow requests from different origins (added here because we are working in react for the frontend)
+// Enable Cross-Origin Resource Sharing (CORS)
 app.use(cors());
 
-//connecting it to mongo db compass(later will be connecting it to the atlas servers)
+// Use routes
+app.use("/students", studentRoutes);
+app.use("/authorities", authorityRoutes);
+
+// Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_DB_URL)
+  .connect(process.env.MONGO_DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
+    console.log("Connected to MongoDB successfully");
     app.listen(port, () => {
-      console.log("connected and up for working");
+      console.log(`Server is running on port ${port}`);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error("Error connecting to MongoDB:", error);
   });
