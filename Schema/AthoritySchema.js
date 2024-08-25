@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const AuthoritySchema = new Schema({
+const authoritySchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -23,4 +23,4 @@ const AuthoritySchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Authority", AuthoritySchema);
+module.exports = mongoose.model("Authority", authoritySchema);
