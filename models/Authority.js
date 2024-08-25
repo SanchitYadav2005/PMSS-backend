@@ -1,68 +1,79 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const validator = require('validator');
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const authoritySchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   lastName: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
     lowercase: true,
-    trim: true
+    trim: true,
   },
   phone: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   role: {
     type: String,
-    enum: ['Reviewer', 'Admin'],
-    required: true
+    enum: ["Reviewer", "Admin"],
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
-  assignedApplications: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student'
-  }],
-  actions: [{
-    applicationId: {
+  assignedApplications: [
+    {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Student',
-      required: true
+      ref: "Student",
     },
-    status: {
-      type: String,
-      enum: ['Pending', 'Approved', 'Rejected'],
-      required: true
+  ],
+  actions: [
+    {
+      applicationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+        required: true,
+      },
+      status: {
+        type: String,
+        enum: ["Pending", "Approved", "Rejected"],
+        required: true,
+      },
+      comments: String,
+      date: {
+        type: Date,
+        default: Date.now,
+      },
     },
-    comments: String,
-    date: {
-      type: Date,
-      default: Date.now
-    }
-  }],
+  ],
   lastLogin: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Static method for authority signup
-authoritySchema.statics.signup = async function (firstName, lastName, email, phone, role, password) {
+authoritySchema.statics.signup = async function (
+  firstName,
+  lastName,
+  email,
+  phone,
+  role,
+  password
+) {
   const Authority = this;
 
   // Check if authority exists with the provided email
@@ -87,7 +98,7 @@ authoritySchema.statics.signup = async function (firstName, lastName, email, pho
       minLowercase: 1,
       minUppercase: 1,
       minNumbers: 1,
-      minSymbols: 1
+      minSymbols: 1,
     })
   ) {
     throw new Error("Password is not strong enough!");
@@ -104,11 +115,11 @@ authoritySchema.statics.signup = async function (firstName, lastName, email, pho
     email,
     phone,
     role,
-    password: hash
+    password: hash,
   });
 
   return authority;
 };
 
-const Authority = mongoose.model('Authority', authoritySchema);
+const Authority = mongoose.model("Authority", authoritySchema);
 module.exports = Authority;

@@ -1,5 +1,5 @@
 const express = require("express");
-const authorityController = require("../controllers/athorityController")
+const authorityController = require("../controllers/athorityController");
 const router = express.Router();
 
 // Authority signup
