@@ -18,6 +18,7 @@
   "homepage": "https://github.com/SanchitYadav2005/PMSS-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2"
   }
 }
