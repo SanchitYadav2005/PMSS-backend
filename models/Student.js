@@ -62,11 +62,11 @@ const studentSchema = new mongoose.Schema({
   documents: {
     essay: {
       type: String, // Path to the essay file
-      required: true
+      // required: true
     },
     transcript: {
       type: String, // Path to the transcript file
-      required: true
+      // required: true
     },
     recommendationLetter: {
       type: String // Path to the recommendation letter file
